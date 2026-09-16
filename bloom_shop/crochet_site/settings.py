@@ -77,7 +77,7 @@ LOGIN_REDIRECT_URL = "dashboard"
 LOGOUT_REDIRECT_URL = "home"
 
 # Change this one value for the shop's WhatsApp number, including country code.
-SHOP_WHATSAPP_NUMBER = "917760787770"  # +91 77607 87770
+SHOP_WHATSAPP_NUMBER = "917767087770"  # +91 7767087770
 SHOP_EMAIL = "thecrochetbloom@example.com"
 SHOP_PHONE = "+91 77607 87770"
 SHOP_ADDRESS = "Jalgaon, Maharashtra, India"
