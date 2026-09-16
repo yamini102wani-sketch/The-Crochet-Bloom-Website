@@ -1,0 +1,6 @@
+{% extends "store/base.html" %}
+{% block title %}My Dashboard | The Crochet Bloom{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">CUSTOMER DASHBOARD</span><h1>Hello, {{ user.first_name|default:user.username }}!</h1><p>Track your orders and keep your crochet journey in one place.</p></div></section>
+<section class="section"><div class="container"><div class="dashboard-grid"><a href="{% url 'shop' %}" class="dash-card">🛍️<h4>Shop</h4><p>Explore creations</p></a><a href="{% url 'custom_order' %}" class="dash-card">🧶<h4>Custom Order</h4><p>Create your own design</p></a><a href="{% url 'cart' %}" class="dash-card">🛒<h4>Cart</h4><p>{{ cart_count }} item(s)</p></a></div><h2 class="mt-5">My Orders</h2>{% for o in orders %}<div class="order-card"><div><b>{{ o.order_id }}</b><small>{{ o.created_at|date:"d M Y, h:i A" }}</small></div><div><span class="status status-{{ o.status|lower }}">{{ o.status }}</span></div><div><b>₹{{ o.total_amount }}</b><small>{{ o.items.count }} item(s)</small></div><a class="btn btn-sm btn-outline-dark" href="{% url 'order_success' o.order_id %}">Details</a></div>{% empty %}<div class="empty-state">You haven't placed any orders yet.</div>{% endfor %}</div></section>
+{% endblock %}

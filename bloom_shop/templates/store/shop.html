@@ -1,0 +1,142 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block title %}Shop | The Crochet Bloom{% endblock %}
+
+{% block content %}
+<section class="shop-hero">
+  <div class="shop-flower flower-left">✿</div>
+  <div class="shop-flower flower-right">✿</div>
+  <div class="container text-center">
+    <h1>Our Shop</h1>
+    <div class="shop-subtitle">
+      <span class="shop-line"></span>
+      <span>♥</span>
+      <p>Handcrafted Crochet Products for Every Mood</p>
+      <span>♥</span>
+      <span class="shop-line"></span>
+    </div>
+  </div>
+</section>
+
+<section class="section shop-section">
+  <div class="container">
+    <div class="shop-toolbar">
+      <form method="get" class="row g-2 align-items-center">
+        <div class="col-md-5">
+          <input name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Search crochet products...">
+        </div>
+        <div class="col-md-3">
+          <select name="category" class="form-select">
+            <option value="">All categories</option>
+            {% for c in categories %}
+              <option value="{{ c.name }}" {% if selected_category == c.name %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-2">
+          <select name="sort" class="form-select">
+            <option value="">Featured</option>
+            <option value="price_low" {% if request.GET.sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+            <option value="price_high" {% if request.GET.sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+            <option value="newest" {% if request.GET.sort == 'newest' %}selected{% endif %}>Newest</option>
+          </select>
+        </div>
+        <div class="col-md-2 d-grid">
+          <button class="btn btn-pink">Search / Filter</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="row g-4 shop-grid">
+      {% for p in products %}
+      <div class="col-12 col-sm-6 col-lg-3">
+        <article class="shop-product-card h-100">
+          <a href="{% url 'product_detail' p.slug %}" class="shop-product-image">
+            {% if p.slug == 'crochet-flower-bouquet' %}
+              <img src="{% static 'images/products/flower_bouquet.jpg' %}" alt="{{ p.name }}">
+            {% elif p.slug == 'sunflower-crochet-bag' %}
+              <img src="{% static 'images/products/sunflower_bag.jpg' %}" alt="{{ p.name }}">
+            {% elif p.slug == 'crochet-princess-doll' %}
+              <img src="{% static 'images/products/princess_doll.jpg' %}" alt="{{ p.name }}">
+            {% elif p.slug == 'crochet-teddy-bear' %}
+              <img src="{% static 'images/products/teddy_bear.jpg' %}" alt="{{ p.name }}">
+            {% elif p.slug == 'crochet-flower-basket' %}
+              <img src="{% static 'images/products/flower_basket.jpg' %}" alt="{{ p.name }}">
+            {% elif p.slug == 'crochet-baby-booties' %}
+              <img src="{% static 'images/products/baby_booties.jpg' %}" alt="{{ p.name }}">
+            {% elif p.slug == 'crochet-hair-scrunchies' %}
+              <img src="{% static 'images/products/hair_scrunchies.jpg' %}" alt="{{ p.name }}">
+            {% elif p.slug == 'crochet-coin-pouch' %}
+              <img src="{% static 'images/products/coin_pouch.jpg' %}" alt="{{ p.name }}">
+            {% elif p.slug == 'cozy-crochet-hat' %}
+              <img src="{% static 'images/products/cozy_crochet_hat.jpg' %}" alt="{{ p.name }}">
+            {% elif p.slug == 'crochet-bunny-keychain' %}
+              <img src="{% static 'images/products/crochet_bunny_keychain.jpg' %}" alt="{{ p.name }}">
+            {% elif p.slug == 'festive-christmas-tree' %}
+              <img src="{% static 'images/products/festive_christmas_tree.jpg' %}" alt="{{ p.name }}">
+            {% else %}
+              <img src="{% static 'images/product.svg' %}" alt="{{ p.name }}">
+            {% endif %}
+          </a>
+
+          <div class="shop-product-body">
+            <span class="shop-category">{{ p.category.name|upper }}</span>
+            <a href="{% url 'product_detail' p.slug %}" class="shop-product-name">{{ p.name }}</a>
+            <p class="shop-description">{{ p.description|truncatewords:14 }}</p>
+
+            <div class="shop-rating">
+              <span class="stars">★★★★★</span>
+              <span class="review-count">
+                {% if p.slug == 'crochet-flower-bouquet' %}(12)
+                {% elif p.slug == 'sunflower-crochet-bag' %}(18)
+                {% elif p.slug == 'crochet-princess-doll' %}(15)
+                {% elif p.slug == 'crochet-teddy-bear' %}(10)
+                {% elif p.slug == 'crochet-flower-basket' %}(8)
+                {% elif p.slug == 'crochet-baby-booties' %}(14)
+                {% elif p.slug == 'crochet-hair-scrunchies' %}(11)
+                {% elif p.slug == 'crochet-coin-pouch' %}(9)
+                {% else %}(5){% endif %}
+              </span>
+            </div>
+
+            <div class="shop-price">₹ {{ p.price }}</div>
+
+            <div class="shop-actions mt-auto">
+              <a href="{% url 'product_detail' p.slug %}" class="shop-view-btn">View Details</a>
+              <form method="post" action="{% url 'add_to_cart' p.id %}" class="shop-action-form">
+                {% csrf_token %}
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="shop-cart-btn">
+                  <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                </button>
+              </form>
+              <form method="post" action="{% url 'add_to_cart' p.id %}" class="shop-action-form">
+                {% csrf_token %}
+                <input type="hidden" name="quantity" value="1">
+                <input type="hidden" name="buy_now" value="1">
+                <button type="submit" class="shop-buy-btn">
+                  <i class="fa-solid fa-bag-shopping"></i> Buy Now
+                </button>
+              </form>
+            </div>
+          </div>
+        </article>
+      </div>
+      {% empty %}
+        <div class="col-12"><div class="empty-state">No products found. Add products in Admin.</div></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="most-loved-image-section py-4">
+  <div class="container">
+    <div class="most-loved-image-card">
+      <img src="{% static 'images/our_most_loved_creations.jpg' %}"
+           alt="Our Most Loved Creations - The Crochet Bloom"
+           class="img-fluid w-100" loading="lazy">
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "store/base.html" %}
+{% block title %}Reviews | The Crochet Bloom{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">CUSTOMER LOVE</span><h1>Reviews</h1><p>Real feedback from our crochet community.</p></div></section>
+<section class="section"><div class="container"><div class="row g-4">{% for r in reviews %}<div class="col-md-6 col-lg-4"><div class="review-card h-100"><div class="rating">{% for i in "12345" %}{% if forloop.counter <= r.rating %}★{% else %}☆{% endif %}{% endfor %}</div><p>“{{ r.text }}”</p><strong>{{ r.user.get_full_name|default:r.user.username }}</strong><small class="d-block text-muted">{{ r.product.name }}</small></div></div>{% empty %}<div class="empty-state">No reviews yet. Be the first!</div>{% endfor %}</div></div></section>
+{% endblock %}

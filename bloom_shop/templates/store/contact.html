@@ -1,0 +1,12 @@
+{% extends "store/base.html" %}
+{% block title %}Contact | The Crochet Bloom{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">GET IN TOUCH</span><h1>Contact Details</h1><p>Have a question or custom crochet idea? We'd love to hear from you.</p></div></section>
+<section class="section"><div class="container"><div class="row g-4 mb-5">
+<div class="col-md-4"><div class="contact-card"><span>📱</span><h4>Call / WhatsApp</h4><p>{{ SHOP_PHONE }}</p><a class="btn btn-pink" href="https://wa.me/{{ SHOP_WHATSAPP_NUMBER }}" target="_blank">Message on WhatsApp</a></div></div>
+<div class="col-md-4"><div class="contact-card"><span>💌</span><h4>Email</h4><p>{{ SHOP_EMAIL }}</p><a href="mailto:{{ SHOP_EMAIL }}">Send Email</a></div></div>
+<div class="col-md-4"><div class="contact-card"><span>🧶</span><h4>Custom Orders</h4><p>Share your design, preferred colors and size.</p><a href="{% url 'custom_order' %}">Create Custom Order</a></div></div>
+</div>
+<div class="form-shell"><h2>Send a Message</h2><form method="post">{% csrf_token %}<div class="row g-3">{% for field in form %}<div class="{% if field.name == 'message' %}col-12{% else %}col-md-6{% endif %}"><label>{{ field.label }}</label>{{ field }}{% for e in field.errors %}<small class="text-danger">{{ e }}</small>{% endfor %}</div>{% endfor %}</div><button class="btn btn-pink btn-lg mt-4">Send Message</button></form></div>
+</div></section>
+{% endblock %}

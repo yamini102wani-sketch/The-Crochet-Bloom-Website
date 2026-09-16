@@ -1,0 +1,76 @@
+{% extends "store/base.html" %}
+{% load static %}
+{% block title %}Our Prices | The Crochet Bloom{% endblock %}
+{% block content %}
+<section class="prices-hero">
+  <div class="prices-flower prices-flower-left">❀</div>
+  <div class="prices-flower prices-flower-right">❀</div>
+  <div class="container text-center">
+    <h1>Our Prices</h1>
+    <div class="prices-subtitle"><span></span><b>♥</b><p>Handcrafted Crochet Products for Every Mood</p><b>♥</b><span></span></div>
+  </div>
+</section>
+
+<section class="prices-layout">
+  <aside class="prices-sidebar">
+    <a href="{% url 'home' %}" class="prices-back-btn">← <span>Back to Home</span></a>
+    <nav class="prices-side-nav">
+      <a href="{% url 'home' %}">⌂ <span>Home</span></a>
+      <a href="{% url 'shop' %}">🛍 <span>Shop</span></a>
+      <a class="active" href="{% url 'prices' %}">🏷 <span>Prices</span></a>
+      <a href="{% url 'about' %}">♙ <span>About</span></a>
+      <a href="{% url 'reviews' %}">★ <span>Reviews</span></a>
+      <a href="{% url 'contact' %}">✉ <span>Contact</span></a>
+      {% if user.is_authenticated %}<a href="{% url 'dashboard' %}">♙ <span>My Account</span></a>{% else %}<a href="{% url 'login' %}">♙ <span>Login</span></a>{% endif %}
+      <a href="{% url 'cart' %}">🛒 <span>Cart</span><em>{{ cart_count }}</em></a>
+    </nav>
+    <div class="sidebar-love"><div>Handmade<br>with Love</div><div class="yarn-art">🧶</div><small>More than just crochet</small></div>
+  </aside>
+
+  <main class="prices-main">
+    <div class="prices-toolbar">
+      <div class="search-pill">⌕ <input id="priceSearch" type="search" placeholder="Search products..."></div>
+      <select id="priceCategory"><option value="">All Categories</option>{% for c in categories %}<option value="{{ c.name|lower }}">{{ c.name }}</option>{% endfor %}</select>
+      <select id="priceSort"><option value="">Sort</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select>
+      <button type="button" class="price-go" onclick="filterPriceCards()">Go</button>
+    </div>
+
+    <div class="price-product-grid" id="priceProductGrid">
+      {% for p in products %}
+      <article class="price-product-card" data-name="{{ p.name|lower }}" data-category="{{ p.category.name|lower }}" data-price="{{ p.price }}">
+        <a class="price-product-image" href="{% url 'product_detail' p.slug %}">
+          {% if p.image %}<img src="{{ p.image.url }}" alt="{{ p.name }}">
+          {% elif p.slug == 'crochet-flower-bouquet' %}<img src="{% static 'images/products/flower_bouquet.jpg' %}" alt="{{ p.name }}">
+          {% elif p.slug == 'sunflower-crochet-bag' %}<img src="{% static 'images/products/sunflower_bag.jpg' %}" alt="{{ p.name }}">
+          {% elif p.slug == 'crochet-princess-doll' %}<img src="{% static 'images/products/princess_doll.jpg' %}" alt="{{ p.name }}">
+          {% elif p.slug == 'crochet-teddy-bear' %}<img src="{% static 'images/products/teddy_bear.jpg' %}" alt="{{ p.name }}">
+          {% elif p.slug == 'crochet-flower-basket' %}<img src="{% static 'images/products/flower_basket.jpg' %}" alt="{{ p.name }}">
+          {% elif p.slug == 'crochet-baby-booties' %}<img src="{% static 'images/products/baby_booties.jpg' %}" alt="{{ p.name }}">
+          {% elif p.slug == 'crochet-hair-scrunchies' %}<img src="{% static 'images/products/hair_scrunchies.jpg' %}" alt="{{ p.name }}">
+          {% elif p.slug == 'crochet-coin-pouch' %}<img src="{% static 'images/products/coin_pouch.jpg' %}" alt="{{ p.name }}">
+          {% else %}<img src="{% static 'images/product.svg' %}" alt="{{ p.name }}">{% endif %}
+        </a>
+        <div class="price-product-content">
+          <span class="price-tag">♥ {{ p.category.name }}</span>
+          <h3>{{ p.name }}</h3>
+          <p>{{ p.description|truncatewords:12 }}</p>
+          <div class="starting-price">Starting from <strong>₹{{ p.price }}</strong></div>
+          <div class="price-rating">★ <span>(5)</span></div>
+          <div class="price-card-meta"><span>♧ Handmade</span><span>♡ Customizable</span></div>
+          <a class="price-details-btn" href="{% url 'product_detail' p.slug %}">◉ View Details</a>
+        </div>
+      </article>
+      {% endfor %}
+      <article class="price-custom-card">
+        <div class="custom-heart">♡</div><span class="price-tag">♥ Custom Orders</span>
+        <h3>Custom Orders</h3><p>Have something special in mind? We create it just for you!</p>
+        <a class="price-details-btn" href="{% url 'custom_order' %}">Request Custom Quote →</a>
+        <div class="price-card-meta"><span>♧ Personalized</span><span>◉ Made to Order</span></div>
+      </article>
+    </div>
+    <div class="price-note"><b>✨ A little note from us:</b> Final price depends on design, size, yarn, colors and customization. We confirm the final quote before making your item.</div>
+    <div class="mobile-back-wrap"><a href="{% url 'home' %}" class="prices-back-btn">← Back to Home</a></div>
+  </main>
+</section>
+{% endblock %}
+{% block extra_js %}{% endblock %}

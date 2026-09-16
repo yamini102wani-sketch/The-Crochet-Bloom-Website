@@ -1,0 +1,5 @@
+{% extends "store/base.html" %}
+{% block title %}Order Confirmed | The Crochet Bloom{% endblock %}
+{% block content %}
+<section class="section"><div class="container text-center"><div class="success-box"><div class="success-icon">✓</div><h1>Order placed successfully!</h1><p>Your Order ID is <strong>{{ order.order_id }}</strong>.</p><div class="order-summary-inline"><p><b>Customer:</b> {{ order.customer_name }}</p><p><b>Total:</b> ₹{{ order.total_amount }}</p><p><b>Status:</b> {{ order.status }}</p></div><a class="btn btn-pink btn-lg" href="{{ whatsapp_url }}" target="_blank" rel="noopener">💬 Send Complete Order Details on WhatsApp</a><p class="small text-muted mt-3">WhatsApp will open with your complete order details already filled in. Tap <strong>Send</strong> in WhatsApp to send the order to The Crochet Bloom.</p><a href="{% url 'dashboard' %}" class="btn btn-outline-dark">View My Orders</a></div></div></section>
+{% endblock %}
