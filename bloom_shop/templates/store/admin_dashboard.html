@@ -3,8 +3,6 @@
 {% block content %}
 <section class="admin-hero"><div class="container d-flex justify-content-between align-items-center"><div><span class="eyebrow">MANAGEMENT PANEL</span><h1>Admin Dashboard</h1><p>Manage products, customers, orders, reviews and enquiries.</p></div><a class="btn btn-light" href="/admin/">Open Django Admin</a></div></section>
 <section class="section"><div class="container"><div class="row g-3">
-{% for label,value in "Products,products_count|Customers,customers_count|Orders,orders_count|Pending,pending_count|Delivered,completed_count|Revenue,revenue|New Enquiries,enquiries_count|Pending Reviews,reviews_count" %}
-{% endfor %}
 <div class="col-6 col-lg-3"><div class="stat-card"><small>Products</small><strong>{{ products_count }}</strong></div></div>
 <div class="col-6 col-lg-3"><div class="stat-card"><small>Customers</small><strong>{{ customers_count }}</strong></div></div>
 <div class="col-6 col-lg-3"><div class="stat-card"><small>Orders</small><strong>{{ orders_count }}</strong></div></div>
