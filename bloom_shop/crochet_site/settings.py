@@ -1,3 +1,4 @@
+import dj_database_url
 import os
 from pathlib import Path 
 
@@ -18,7 +19,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -48,10 +48,10 @@ WSGI_APPLICATION = "crochet_site.wsgi.application"
 ASGI_APPLICATION = "crochet_site.asgi.application"
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -66,9 +66,8 @@ TIME_ZONE = "Asia/Kolkata"
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "/static/"
+STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -81,5 +80,5 @@ LOGOUT_REDIRECT_URL = "home"
 # Change this one value for the shop's WhatsApp number, including country code.
 SHOP_WHATSAPP_NUMBER = "917767087770"  # +91 7767087770
 SHOP_EMAIL = "thecrochetbloom@example.com"
-SHOP_PHONE = "+91 77607 87770"
+SHOP_PHONE = "+91 7767087770"
 SHOP_ADDRESS = "Jalgaon, Maharashtra, India"
